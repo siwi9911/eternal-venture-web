@@ -1,1 +1,861 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eternal Venture</title>
 
+  <link rel="icon" href="media/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+    :root{
+      --gold-1:#ffd700;
+      --gold-2:#ffb300;
+      --gold-3:#ffea8a;
+      --card:rgba(0,0,0,0.42);
+      --border:rgba(255,215,0,0.22);
+      --text-soft:rgba(255,255,255,0.82);
+      --text-faint:rgba(255,255,255,0.62);
+      --discord-1:#5865F2;
+      --discord-2:#4752C4;
+      --danger:#ff6666;
+      --success:#ffd700;
+      --main-font:'Space Grotesk', sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:var(--main-font);
+      color:white;
+      background:radial-gradient(circle at top,#1b1304,#070605 60%);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 14%, rgba(255,215,0,0.18), transparent 45%),
+        linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.62));
+      z-index:-3;
+      pointer-events:none;
+    }
+
+    #bgVideo{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-5;
+      filter:brightness(0.28) saturate(1.05);
+    }
+
+    #particles-js{
+      position:fixed;
+      inset:0;
+      z-index:-4;
+    }
+
+    .navbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 22px;
+      background:rgba(0,0,0,0.28);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,215,0,0.08);
+      z-index:20;
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      flex-wrap:wrap;
+    }
+
+    .nav-logo{
+      width:48px;
+      height:48px;
+      object-fit:contain;
+      filter:drop-shadow(0 0 10px rgba(255,215,0,0.35));
+      flex:0 0 auto;
+    }
+
+    .nav-brand{
+      font-weight:800;
+      letter-spacing:.4px;
+      color:var(--gold-1);
+      white-space:nowrap;
+    }
+
+    .nav-ip{
+      color:var(--gold-1);
+      font-weight:700;
+      white-space:nowrap;
+      opacity:.95;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+      opacity:.92;
+      transition:.25s;
+    }
+
+    .nav-links a:hover{
+      color:var(--gold-1);
+      transform:translateY(-1px);
+    }
+
+    .nav-cta{
+      padding:10px 16px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+      color:#1a1200 !important;
+      box-shadow:0 0 18px rgba(255,215,0,0.25);
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:124px 20px 60px;
+      text-align:center;
+    }
+
+    .hero-inner{
+      max-width:980px;
+      width:100%;
+    }
+
+    .logo-wrap{
+      position:relative;
+      display:inline-block;
+      margin-bottom:18px;
+      animation:float 4s ease-in-out infinite;
+    }
+
+    .logo-wrap::after{
+      content:"";
+      position:absolute;
+      inset:-12px;
+      background:radial-gradient(circle, rgba(255,215,0,0.28), transparent 60%);
+      z-index:-1;
+      filter:blur(10px);
+    }
+
+    .hero-logo{
+      width:min(270px,52vw);
+      max-width:270px;
+      object-fit:contain;
+      filter:
+        drop-shadow(0 0 16px rgba(255,215,0,0.58))
+        drop-shadow(0 0 36px rgba(255,215,0,0.28));
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-12px)}
+      100%{transform:translateY(0)}
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(2.2rem,5.2vw,4.8rem);
+      line-height:1.02;
+      text-shadow:0 0 28px rgba(255,215,0,0.10);
+    }
+
+    .gold{
+      color:var(--gold-1);
+      text-shadow:
+        0 0 8px rgba(255,215,0,0.50),
+        0 0 28px rgba(255,215,0,0.20);
+    }
+
+    .hero-sub{
+      max-width:760px;
+      margin:18px auto 0;
+      font-size:1.08rem;
+      color:var(--text-soft);
+      line-height:1.7;
+    }
+
+    .hero-actions{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:28px;
+    }
+
+    .ip-btn, .discord-btn, .shop-btn{
+      border:none;
+      text-decoration:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:16px 24px;
+      font-size:1rem;
+      font-weight:900;
+      transition:.25s ease;
+      font-family:inherit;
+      display:inline-block;
+    }
+
+    .ip-btn{
+      color:#1a1200;
+      background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+      box-shadow:0 0 25px rgba(255,215,0,0.30);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .ip-btn::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:60%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+      transform:skewX(-20deg);
+      transition:.5s;
+    }
+
+    .ip-btn:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 42px rgba(255,215,0,0.48);
+    }
+
+    .ip-btn:hover::after{
+      left:140%;
+    }
+
+    .discord-btn{
+      color:white;
+      background:linear-gradient(135deg,var(--discord-1),var(--discord-2));
+      box-shadow:0 0 20px rgba(88,101,242,0.25);
+    }
+
+    .shop-btn{
+      color:#1a1200;
+      background:linear-gradient(135deg,#fff3b0,#ffd700);
+      box-shadow:0 0 20px rgba(255,215,0,0.22);
+    }
+
+    .discord-btn:hover,
+    .shop-btn:hover{
+      transform:scale(1.05);
+    }
+
+    .copy-note{
+      margin-top:10px;
+      color:var(--text-faint);
+      font-size:.95rem;
+      min-height:22px;
+    }
+
+    .status-row{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(0,0,0,0.42);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(10px);
+      font-weight:700;
+    }
+
+    .badge.online{
+      color:var(--success);
+      border-color:rgba(255,215,0,0.45);
+      box-shadow:0 0 18px rgba(255,215,0,0.18);
+    }
+
+    .badge.offline{
+      color:var(--danger);
+      border-color:rgba(255,102,102,0.4);
+    }
+
+    .online-players{
+      margin-top:20px;
+      text-align:center;
+    }
+
+    .online-players h3{
+      margin:0 0 12px;
+      color:var(--gold-1);
+      font-size:1.05rem;
+    }
+
+    .player-heads{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      min-height:44px;
+    }
+
+    .player-head{
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      border:1px solid rgba(255,215,0,0.25);
+      box-shadow:0 0 12px rgba(255,215,0,0.12);
+      background:#111;
+      object-fit:cover;
+    }
+
+    .players-empty{
+      color:var(--text-faint);
+      font-size:.95rem;
+    }
+
+    .container{
+      max-width:1180px;
+      margin:0 auto;
+      padding:0 20px 90px;
+    }
+
+    .section{
+      margin-top:48px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:30px;
+      backdrop-filter:blur(10px);
+      box-shadow:0 0 35px rgba(0,0,0,0.12);
+    }
+
+    .section h2{
+      margin:0 0 18px;
+      font-size:clamp(1.5rem,3vw,2.3rem);
+      color:var(--gold-1);
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+      align-items:start;
+    }
+
+    .info-text{
+      font-size:1.08rem;
+      line-height:1.9;
+      color:var(--text-soft);
+    }
+
+    .info-text b{
+      color:white;
+    }
+
+    .server-list{
+      display:grid;
+      gap:14px;
+    }
+
+    .mini-card{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,215,0,0.14);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .mini-card-title{
+      color:var(--gold-1);
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .features,
+    .vip-grid{
+      display:grid;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .features{
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+    }
+
+    .vip-grid{
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      justify-content:center;
+      max-width:900px;
+      margin:18px auto 0;
+    }
+
+    .feature,
+    .vip-card{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,215,0,0.14);
+      border-radius:20px;
+      overflow:hidden;
+      transition:.25s;
+    }
+
+    .feature:hover,
+    .vip-card:hover{
+      transform:translateY(-5px) scale(1.01);
+      box-shadow:0 0 24px rgba(255,215,0,0.10);
+    }
+
+    .feature img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .feature-body,
+    .vip-body{
+      padding:16px;
+    }
+
+    .feature-body h3,
+    .vip-body h3{
+      margin:0 0 8px;
+      color:var(--gold-1);
+      font-size:1.15rem;
+    }
+
+    .feature-body p,
+    .vip-body p{
+      margin:0;
+      color:var(--text-soft);
+      line-height:1.6;
+    }
+
+    .icon{
+      display:inline-block;
+      font-size:30px;
+      animation:iconFloat 2s infinite;
+    }
+
+    @keyframes iconFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-6px)}
+    }
+
+    .icon-pvp{animation-delay:.2s;}
+    .icon-oneblock{animation-delay:.4s;}
+    .icon-economy{animation-delay:.6s;}
+
+    .vip-price{
+      margin:14px 0 10px;
+      font-size:1.6rem;
+      font-weight:900;
+      color:var(--gold-1);
+    }
+
+    .vip-btn{
+      display:inline-block;
+      margin-top:12px;
+      padding:12px 16px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:800;
+      color:#1a1200;
+      background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+    }
+
+    .rules-text{
+      line-height:1.85;
+      color:var(--text-soft);
+      white-space:pre-line;
+      font-size:1.04rem;
+    }
+
+    .footer{
+      margin-top:60px;
+      padding:40px 20px 30px;
+      background:rgba(0,0,0,0.35);
+      border-top:1px solid rgba(255,215,0,0.12);
+      backdrop-filter:blur(10px);
+    }
+
+    .footer-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.2fr .8fr .8fr;
+      gap:24px;
+      align-items:start;
+    }
+
+    .footer-brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:12px;
+    }
+
+    .footer-logo{
+      width:54px;
+      height:54px;
+      object-fit:contain;
+      filter:drop-shadow(0 0 10px rgba(255,215,0,0.30));
+    }
+
+    .footer-title{
+      font-size:1.2rem;
+      font-weight:800;
+      color:var(--gold-1);
+    }
+
+    .footer-text{
+      color:var(--text-soft);
+      line-height:1.7;
+      font-size:.98rem;
+    }
+
+    .footer-heading{
+      color:var(--gold-1);
+      font-weight:800;
+      margin-bottom:12px;
+      font-size:1.05rem;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .footer-links a{
+      color:var(--text-soft);
+      text-decoration:none;
+      transition:.25s;
+    }
+
+    .footer-links a:hover{
+      color:var(--gold-1);
+      transform:translateX(4px);
+    }
+
+    .footer-bottom{
+      max-width:1180px;
+      margin:24px auto 0;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      text-align:center;
+      color:rgba(255,255,255,0.56);
+      font-size:.92rem;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(34px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1100px){
+      .features{grid-template-columns:repeat(2, minmax(0, 1fr));}
+    }
+
+    @media (max-width: 980px){
+      .nav-links{display:none}
+      .info-grid{grid-template-columns:1fr}
+      .features,
+      .vip-grid,
+      .footer-inner{grid-template-columns:1fr}
+      .section{padding:22px}
+      .hero{padding-top:110px}
+      .footer{padding:34px 20px 26px}
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="hoverSound" preload="auto">
+    <source src="media/hover.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="clickSound" preload="auto">
+    <source src="media/click.mp3" type="audio/mpeg">
+  </audio>
+
+  <video autoplay muted loop playsinline preload="auto" id="bgVideo">
+    <source src="media/background.mp4" type="video/mp4">
+  </video>
+
+  <div id="particles-js"></div>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="media/logo_small.png" alt="Eternal Venture logo" class="nav-logo">
+      <div class="nav-brand">Eternal Venture</div>
+      <div class="nav-ip">play.eternalventure.cz</div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#info">Info</a>
+      <a href="#features">Módy</a>
+      <a href="#shop">VIP</a>
+      <a href="#rules">Pravidla</a>
+      <a href="https://discord.gg/F3MRKq9ceH" target="_blank" rel="noopener">Discord</a>
+      <a href="https://discord.gg/F3MRKq9ceH" target="_blank" rel="noopener" class="nav-cta">Hrát teď</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="join">
+    <div class="hero-inner">
+      <div class="logo-wrap">
+        <img src="media/logo.png" alt="Golden V logo" class="hero-logo">
+      </div>
+
+      <h1>Vítej na <span class="gold">Eternal Venture</span></h1>
+
+      <p class="hero-sub">
+        Survival, Ekonomika a PvP v luxusním gold stylu. Připoj se k aktivní komunitě,
+        obchoduj, bojuj a zažij eventy, které stojí za to.
+      </p>
+
+      <div class="hero-actions">
+        <button class="ip-btn sfx" onclick="copyIP()">play.eternalventure.cz</button>
+        <a class="discord-btn sfx" href="https://discord.gg/F3MRKq9ceH" target="_blank" rel="noopener">Discord</a>
+        <a class="shop-btn sfx" href="#shop">VIP & Shop</a>
+      </div>
+
+      <div id="copyNote" class="copy-note"></div>
+
+      <div class="status-row">
+        <div id="serverStatus" class="badge">Načítání serveru…</div>
+        <div id="playerCount" class="badge">👥 Hráči: načítání…</div>
+        <div class="badge">📦 Verze: 1.18+</div>
+      </div>
+
+      <div class="online-players">
+        <h3>Online hráči</h3>
+        <div id="playerHeads" class="player-heads">
+          <div class="players-empty">Načítání hráčů…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="section reveal" id="info">
+      <h2>🌍 Informace o serveru</h2>
+
+      <div class="info-grid">
+        <div class="info-text">
+          🌍 IP: <b>play.eternalventure.cz</b><br>
+          📦 Verze: <b>1.18+</b><br><br>
+
+          Naším cílem je férový, zábavný a bezpečný svět pro všechny hráče.<br><br>
+
+          🎮 Módy:<br>
+          - Survival<br>
+          - Economy<br>
+          - PvP<br>
+          - OneBlock<br><br>
+
+          🔥 Co nabízíme:<br>
+          - Eventy<br>
+          - Obchodování<br>
+          - Aktivní komunitu<br><br>
+
+          👉 Připoj se a začni hrát!
+        </div>
+
+        <div class="server-list">
+          <div class="mini-card">
+            <div class="mini-card-title">Java Edition</div>
+            IP: <b>play.eternalventure.cz</b><br>
+            Verze: <b>1.18+</b>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-title">Bedrock Edition</div>
+            IP: <b>omega.goodhost.cz</b><br>
+            Port: <b>6006</b>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-title">Komunita</div>
+            Discord: <b>EternalVenture</b><br>
+            Eventy, novinky, podpora
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="features">
+      <h2>🔥 Co u nás najdeš</h2>
+
+      <div class="features">
+        <div class="feature">
+          <img src="media/survival.jpg" alt="Survival">
+          <div class="feature-body">
+            <h3><span class="icon">🌍</span><br>Survival</h3>
+            <p>Klasický survival zážitek s komunitou, ekonomikou a dlouhodobým postupem.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <img src="media/pvp.jpg" alt="PvP">
+          <div class="feature-body">
+            <h3><span class="icon icon-pvp">⚔️</span><br>PvP</h3>
+            <p>Souboje, soutěže a akce, kde můžeš ukázat skill i získat odměny.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <img src="media/oneblock.jpg" alt="OneBlock">
+          <div class="feature-body">
+            <h3><span class="icon icon-oneblock">☁️</span><br>OneBlock</h3>
+            <p>Začni na jednom bloku a postupně buduj svůj vlastní svět plný výzev.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <img src="media/economy.jpg" alt="Ekonomika">
+          <div class="feature-body">
+            <h3><span class="icon icon-economy">💰</span><br>Ekonomika</h3>
+            <p>Prodávej, nakupuj a buduj své impérium v živé serverové ekonomice.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="shop">
+      <h2>💎 VIP & Shop</h2>
+
+      <div class="vip-grid">
+        <div class="vip-card">
+          <div class="vip-body">
+            <h3>NORMAL</h3>
+            <p>
+              ✔ základní výhody<br>
+              ✔ bonus peníze<br>
+              ✔ zvýrazněné jméno
+            </p>
+            <div class="vip-price">49 Kč</div>
+            <a href="https://discord.gg/F3MRKq9ceH" target="_blank" class="vip-btn sfx">Koupit přes Discord</a>
+          </div>
+        </div>
+
+        <div class="vip-card">
+          <div class="vip-body">
+            <h3>VIP+</h3>
+            <p>
+              ✔ vše z NORMAL<br>
+              ✔ vyšší výdělky<br>
+              ✔ exkluzivní příkazy<br>
+              ✔ speciální prefix
+            </p>
+            <div class="vip-price">99 Kč</div>
+            <a href="https://discord.gg/F3MRKq9ceH" target="_blank" class="vip-btn sfx">Koupit přes Discord</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="rules">
+      <h2>📜 Pravidla</h2>
+
+      <div class="rules-text">
+⚖️ <b>Respekt hráčů</b>
+Chovej se ke všem s respektem.
+❌ nadávky, urážky, toxicita
+✔️ férová a přátelská komunikace
+
+🚫 <b>Spam & reklama</b>
+Udržuj chat čistý a přehledný.
+❌ spamování
+❌ reklamy bez povolení
+❌ zbytečné pingování
+
+⚔️ <b>Fair play</b>
+Hraj čestně a bez výhod.
+❌ hacky (x-ray, killaura atd.)
+❌ bug abuse
+✔️ normální a poctivá hra
+
+🛡️ <b>Grief & krádeže</b>
+Respektuj práci ostatních hráčů.
+❌ ničení staveb
+❌ kradení bez povolení
+✔️ ochrana cizích projektů
+
+💬 <b>Chat & komunikace</b>
+Používej správné kanály a udržuj pořádek.
+✔️ přehledná komunikace
+❌ spam a off-topic v nesprávných místnostech
+
+🔞 <b>Nevhodný obsah</b>
+Server je pro všechny hráče.
+❌ NSFW obsah
+❌ rasismus, extrémismus, diskriminace
+
+🏗️ <b>Svět & stavby</b>
+Buduj s respektem ke světu.
+❌ nevhodné stavby
+❌ ničení spawnu a veřejných zón
+✔️ kreativita vítána
+
+⚠️ <b>Tresty</b>
+Porušení pravidel může vést k:
+⛔ mute
+⛔ kick
+⛔ ban
+
+Tresty se odvíjí od závažnosti porušení.
+
+👑 <b>Administrace</b>
+Respektuj rozhodnutí týmu.
+Admin má vždy poslední slovo.
+
+🔥 <b>Eternal Venture • Hraj fér, buduj legendu</b>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <img src="media/logo_small.png" alt="Eternal Venture logo" class="footer-logo">
+          <div class="footer-title">Eternal Venture</div>
+        </div>
+        <div class="footer-text">
+          Minecraft server zaměřený na Survival, PvP, OneBlock a Ekono
