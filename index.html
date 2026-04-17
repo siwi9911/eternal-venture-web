@@ -858,4 +858,152 @@ Admin má vždy poslední slovo.
           <div class="footer-title">Eternal Venture</div>
         </div>
         <div class="footer-text">
-          Minecraft server zaměřený na Survival, PvP, OneBlock a Ekono
+          Minecraft server zaměřený na Survival, PvP, OneBlock a Ekonomiku.
+          Férový, zábavný a bezpečný svět pro všechny hráče.
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-heading">Rychlé odkazy</div>
+        <div class="footer-links">
+          <a href="#info">Informace</a>
+          <a href="#features">Módy</a>
+          <a href="#shop">VIP & Shop</a>
+          <a href="#rules">Pravidla</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-heading">Kontakt</div>
+        <div class="footer-links">
+          <a href="https://discord.gg/F3MRKq9ceH" target="_blank" rel="noopener">Discord: EternalVenture</a>
+          <a href="#">IP: play.eternalventure.cz</a>
+          <a href="#">Bedrock: omega.goodhost.cz:6006</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      Eternal Venture © 2026 • Hraj fér, buduj legendu
+    </div>
+  </footer>
+
+  <script>
+    function playHover(){
+      const sound = document.getElementById("hoverSound");
+      if(!sound) return;
+      sound.currentTime = 0;
+      sound.volume = 0.15;
+      sound.play().catch(() => {});
+    }
+
+    function playClick(){
+      const sound = document.getElementById("clickSound");
+      if(!sound) return;
+      sound.currentTime = 0;
+      sound.volume = 0.2;
+      sound.play().catch(() => {});
+    }
+
+    document.querySelectorAll('.sfx').forEach(el => {
+      el.addEventListener('mouseenter', playHover);
+      el.addEventListener('click', playClick);
+    });
+
+    function copyIP(){
+      playClick();
+      navigator.clipboard.writeText("play.eternalventure.cz");
+      const note = document.getElementById("copyNote");
+      note.textContent = "✔ IP zkopírována";
+      setTimeout(() => {
+        note.textContent = "";
+      }, 1500);
+    }
+
+    async function updateServerStatus(){
+      const statusEl = document.getElementById("serverStatus");
+      const playersEl = document.getElementById("playerCount");
+      const headsEl = document.getElementById("playerHeads");
+
+      try{
+        const res = await fetch("https://api.mcsrvstat.us/2/play.eternalventure.cz");
+        const data = await res.json();
+
+        if(data.online){
+          const online = data.players && typeof data.players.online !== "undefined" ? data.players.online : 0;
+          const max = data.players && typeof data.players.max !== "undefined" ? data.players.max : "?";
+
+          statusEl.className = "badge online";
+          statusEl.innerHTML = "🟡 ONLINE";
+
+          playersEl.className = "badge";
+          playersEl.innerHTML = "👥 Hráči: " + online + "/" + max;
+
+          if(data.players && Array.isArray(data.players.list) && data.players.list.length > 0){
+            headsEl.innerHTML = data.players.list.slice(0, 12).map(name =>
+              `<img class="player-head" src="https://mc-heads.net/avatar/${encodeURIComponent(name)}/64" alt="${name}" title="${name}">`
+            ).join("");
+          } else {
+            headsEl.innerHTML = `<div class="players-empty">Nikdo není právě online nebo seznam hráčů není veřejný.</div>`;
+          }
+        }else{
+          statusEl.className = "badge offline";
+          statusEl.innerHTML = "🔴 OFFLINE";
+
+          playersEl.className = "badge";
+          playersEl.innerHTML = "👥 Hráči: 0/0";
+
+          headsEl.innerHTML = `<div class="players-empty">Server je offline.</div>`;
+        }
+      }catch(e){
+        statusEl.className = "badge offline";
+        statusEl.innerHTML = "⚠ Status nelze načíst";
+
+        playersEl.className = "badge";
+        playersEl.innerHTML = "👥 Hráči: ?";
+
+        headsEl.innerHTML = `<div class="players-empty">Nelze načíst hráče.</div>`;
+      }
+    }
+
+    updateServerStatus();
+    setInterval(updateServerStatus, 30000);
+
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 70 },
+        color: { value: "#ffd700" },
+        shape: { type: "circle" },
+        opacity: { value: 0.32 },
+        size: { value: 2.2 },
+        line_linked: {
+          enable: true,
+          color: "#ffd700",
+          opacity: 0.16
+        },
+        move: {
+          enable: true,
+          speed: 0.9
+        }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: false },
+          onclick: { enable: false }
+        }
+      },
+      retina_detect: true
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
