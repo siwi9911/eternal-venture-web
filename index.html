@@ -14,8 +14,6 @@
       --gold-1:#ffd700;
       --gold-2:#ffb300;
       --gold-3:#ffea8a;
-      --bg-1:#140f04;
-      --bg-2:#070605;
       --card:rgba(0,0,0,0.40);
       --border:rgba(255,215,0,0.20);
       --text-soft:rgba(255,255,255,0.82);
@@ -24,15 +22,9 @@
       --discord-2:#4752C4;
       --danger:#ff6666;
       --success:#ffd700;
-      --shadow-gold:0 0 24px rgba(255,215,0,0.22);
-      --radius-xl:24px;
-      --radius-lg:18px;
-      --radius-md:14px;
-      --maxw:1180px;
     }
 
     *{box-sizing:border-box}
-
     html{scroll-behavior:smooth}
 
     body{
@@ -80,7 +72,7 @@
       align-items:center;
       justify-content:space-between;
       padding:0 22px;
-      background:rgba(0,0,0,0.26);
+      background:rgba(0,0,0,0.28);
       backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(255,215,0,0.08);
       z-index:20;
@@ -91,6 +83,7 @@
       align-items:center;
       gap:14px;
       min-width:0;
+      flex-wrap:wrap;
     }
 
     .nav-logo{
@@ -106,6 +99,13 @@
       letter-spacing:.4px;
       color:var(--gold-1);
       white-space:nowrap;
+    }
+
+    .nav-ip{
+      color:var(--gold-1);
+      font-weight:700;
+      white-space:nowrap;
+      opacity:.95;
     }
 
     .nav-links{
@@ -133,7 +133,7 @@
       border-radius:12px;
       background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
       color:#1a1200 !important;
-      box-shadow:var(--shadow-gold);
+      box-shadow:0 0 18px rgba(255,215,0,0.25);
     }
 
     .hero{
@@ -231,7 +231,6 @@
       font-weight:900;
       transition:.25s ease;
       font-family:inherit;
-      position:relative;
     }
 
     .ip-btn{
@@ -294,7 +293,7 @@
     }
 
     .container{
-      max-width:var(--maxw);
+      max-width:1180px;
       margin:0 auto;
       padding:0 20px 90px;
     }
@@ -303,7 +302,7 @@
       margin-top:48px;
       background:var(--card);
       border:1px solid var(--border);
-      border-radius:var(--radius-xl);
+      border-radius:24px;
       padding:30px;
       backdrop-filter:blur(10px);
       box-shadow:0 0 35px rgba(0,0,0,0.12);
@@ -393,6 +392,13 @@
       line-height:1.6;
     }
 
+    .rules-text{
+      line-height:1.85;
+      color:var(--text-soft);
+      white-space:pre-line;
+      font-size:1.04rem;
+    }
+
     .footer{
       text-align:center;
       color:rgba(255,255,255,0.58);
@@ -400,7 +406,7 @@
       font-size:.95rem;
     }
 
-    @media (max-width: 900px){
+    @media (max-width: 980px){
       .nav-links{display:none}
       .info-grid{grid-template-columns:1fr}
       .features{grid-template-columns:1fr}
@@ -421,13 +427,15 @@
     <div class="nav-left">
       <img src="media/logo_small.png" alt="Eternal Venture logo" class="nav-logo">
       <div class="nav-brand">Eternal Venture</div>
+      <div class="nav-ip">play.eternalventure.cz</div>
     </div>
 
     <div class="nav-links">
       <a href="#info">Info</a>
       <a href="#features">Módy</a>
+      <a href="#rules">Pravidla</a>
       <a href="https://discord.gg/F3MRKq9ceH" target="_blank" rel="noopener">Discord</a>
-      <a href="#join" class="nav-cta">Hrát teď</a>
+      <a href="https://discord.gg/F3MRKq9ceH" target="_blank" rel="noopener" class="nav-cta">Hrát teď</a>
     </div>
   </nav>
 
@@ -441,8 +449,8 @@
       <h1>Vítej na <span class="gold">Eternal Venture</span></h1>
 
       <p class="hero-sub">
-        Survival, Economy a PvP v luxusním gold stylu. Připoj se k aktivní komunitě, obchoduj,
-        bojuj a zažij eventy, které stojí za to.
+        Survival, Economy a PvP v luxusním gold stylu. Připoj se k aktivní komunitě,
+        obchoduj, bojuj a zažij eventy, které stojí za to.
       </p>
 
       <div class="hero-actions">
@@ -454,6 +462,7 @@
 
       <div class="status-row">
         <div id="serverStatus" class="badge">Načítání serveru…</div>
+        <div id="playerCount" class="badge">👥 Hráči: načítání…</div>
         <div class="badge">📦 Verze: 1.18+</div>
       </div>
     </div>
@@ -467,6 +476,8 @@
         <div class="info-text">
           🌍 IP: <b>play.eternalventure.cz</b><br>
           📦 Verze: <b>1.18+</b><br><br>
+
+          Naším cílem je férový, zábavný a bezpečný svět pro všechny hráče.<br><br>
 
           🎮 Módy:<br>
           - Survival<br>
@@ -496,7 +507,7 @@
 
           <div class="mini-card">
             <div class="mini-card-title">Komunita</div>
-            Discord: <b>F3MRKq9ceH</b><br>
+            Discord: <b>EternalVenture</b><br>
             Eventy, novinky, podpora
           </div>
         </div>
@@ -508,7 +519,7 @@
 
       <div class="features">
         <div class="feature">
-          <img src="https://images.unsplash.com/photo-1627856013091-fed6b1d2c4a1?auto=format&fit=crop&w=1200&q=80" alt="Survival image">
+          <img src="media/survival.jpg" alt="Survival">
           <div class="feature-body">
             <h3>Survival</h3>
             <p>Klasický survival zážitek s komunitou, ekonomikou a dlouhodobým postupem.</p>
@@ -516,20 +527,79 @@
         </div>
 
         <div class="feature">
-          <img src="https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=80" alt="PvP image">
+          <img src="media/pvp.jpg" alt="PvP">
           <div class="feature-body">
-            <h3>PvP & Boj</h3>
+            <h3>PvP</h3>
             <p>Souboje, soutěže a akce, kde můžeš ukázat skill i získat odměny.</p>
           </div>
         </div>
 
         <div class="feature">
-          <img src="https://images.unsplash.com/photo-1620121478247-ec786b9be2fa?auto=format&fit=crop&w=1200&q=80" alt="Economy image">
+          <img src="media/economy.jpg" alt="Ekonomika">
           <div class="feature-body">
-            <h3>Economy & Obchodování</h3>
+            <h3>Ekonomika</h3>
             <p>Prodávej, nakupuj a buduj své impérium v živé serverové ekonomice.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="rules">
+      <h2>📜 Pravidla</h2>
+
+      <div class="rules-text">
+⚖️ <b>Respekt hráčů</b>
+Chovej se ke všem s respektem.
+❌ nadávky, urážky, toxicita
+✔️ férová a přátelská komunikace
+
+🚫 <b>Spam & reklama</b>
+Udržuj chat čistý a přehledný.
+❌ spamování
+❌ reklamy bez povolení
+❌ zbytečné pingování
+
+⚔️ <b>Fair play</b>
+Hraj čestně a bez výhod.
+❌ hacky (x-ray, killaura atd.)
+❌ bug abuse
+✔️ normální a poctivá hra
+
+🛡️ <b>Grief & krádeže</b>
+Respektuj práci ostatních hráčů.
+❌ ničení staveb
+❌ kradení bez povolení
+✔️ ochrana cizích projektů
+
+💬 <b>Chat & komunikace</b>
+Používej správné kanály a udržuj pořádek.
+✔️ přehledná komunikace
+❌ spam a off-topic v nesprávných místnostech
+
+🔞 <b>Nevhodný obsah</b>
+Server je pro všechny hráče.
+❌ NSFW obsah
+❌ rasismus, extrémismus, diskriminace
+
+🏗️ <b>Svět & stavby</b>
+Buduj s respektem ke světu.
+❌ nevhodné stavby
+❌ ničení spawnu a veřejných zón
+✔️ kreativita vítána
+
+⚠️ <b>Tresty</b>
+Porušení pravidel může vést k:
+⛔ mute
+⛔ kick
+⛔ ban
+
+Tresty se odvíjí od závažnosti porušení.
+
+👑 <b>Administrace</b>
+Respektuj rozhodnutí týmu.
+Admin má vždy poslední slovo.
+
+🔥 <b>Eternal Venture • Hraj fér, buduj legendu</b>
       </div>
     </section>
   </main>
@@ -549,24 +619,35 @@
     }
 
     async function updateServerStatus(){
-      const el = document.getElementById("serverStatus");
+      const statusEl = document.getElementById("serverStatus");
+      const playersEl = document.getElementById("playerCount");
 
       try{
         const res = await fetch("https://api.mcsrvstat.us/2/play.eternalventure.cz");
         const data = await res.json();
 
         if(data.online){
-          el.className = "badge online";
           const online = data.players && typeof data.players.online !== "undefined" ? data.players.online : 0;
           const max = data.players && typeof data.players.max !== "undefined" ? data.players.max : "?";
-          el.innerHTML = "🟡 ONLINE • " + online + "/" + max + " hráčů";
+
+          statusEl.className = "badge online";
+          statusEl.innerHTML = "🟡 ONLINE";
+
+          playersEl.className = "badge";
+          playersEl.innerHTML = "👥 Hráči: " + online + "/" + max;
         }else{
-          el.className = "badge offline";
-          el.innerHTML = "🔴 OFFLINE";
+          statusEl.className = "badge offline";
+          statusEl.innerHTML = "🔴 OFFLINE";
+
+          playersEl.className = "badge";
+          playersEl.innerHTML = "👥 Hráči: 0/0";
         }
       }catch(e){
-        el.className = "badge offline";
-        el.innerHTML = "⚠ Status nelze načíst";
+        statusEl.className = "badge offline";
+        statusEl.innerHTML = "⚠ Status nelze načíst";
+
+        playersEl.className = "badge";
+        playersEl.innerHTML = "👥 Hráči: ?";
       }
     }
 
