@@ -5,111 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eternal Venture | Minecraft Server</title>
 
-    <link rel="icon" type="image/png" href="media/favicon.png">
+    <link rel="icon" href="media/favicon.png">
     <link rel="stylesheet" href="media/style.css">
-
     <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
 
 <!-- NAVBAR -->
 <nav class="desktop_navbar">
-    <a href="#"><img class="desktop_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
-    <a href="#about" class="desktop_navbar_link scroll">About</a>
+    <a href="#">
+        <img class="desktop_navbar_logo_img" src="media/logo_small.png">
+    </a>
+
+    <a href="#about" class="desktop_navbar_link scroll">O serveru</a>
     <a href="#discord" class="desktop_navbar_link scroll">Discord</a>
-    <a href="#join" class="desktop_navbar_link scroll">Join</a>
+    <a href="#join" class="desktop_navbar_link scroll">Připojení</a>
 
     <div class="desktop_navbar_link2_div">
-        <a href="#join" class="desktop_navbar_link2 scroll">Play Now</a>
+        <a href="#join" class="desktop_navbar_link2 scroll">HRÁT TEĎ</a>
     </div>
 </nav>
 
 <!-- HERO -->
 <div class="mainflex">
+
     <div class="main1">
 
-        <img class="main1_logo" src="media/logo.png" alt="logo">
+        <img class="main1_logo" src="media/logo.png">
 
         <div class="main1_description">
-            <a>Welcome to</a>
-            <a class="main1_actcent">Eternal Venture</a>
+            <a>Vítej na</a>
+            <a class="main1_actcent">✦ Eternal Venture ✦</a>
         </div>
 
         <!-- IP COPY -->
         <div class="main1_ipcopier_div">
-            <button class="main1_ipcopier" onclick="copyText()">
+            <button class="main1_ipcopier" onclick="copyIP()">
                 <span class="main1_ipcopier_text1">play.eternalventure.cz</span>
                 <br>
-                <span class="main1_ipcopier_text2">Click to copy IP</span>
+                <span class="main1_ipcopier_text2">Klikni pro kopírování</span>
             </button>
 
             <script>
-                function copyText() {
+                function copyIP() {
                     navigator.clipboard.writeText("play.eternalventure.cz");
                 }
             </script>
         </div>
 
-        <a href="#more" class="scroll">
-            <img class="main1_downarrow" src="media/downarrow.png">
-        </a>
     </div>
 
-<!-- FEATURES -->
-<div id="more"></div>
+<!-- ABOUT -->
+<div id="about"></div>
 
 <div class="main2">
-    <a class="headline">What we offer</a>
+    <a class="headline">Co nabízíme</a>
 
     <div class="main2_features_div">
 
         <div class="main2_feature">
             <img src="media/placeholder.png">
             <a class="main2_feature_headline">Survival</a>
-            <a class="main2_feature_text">Classic survival gameplay (1.18+)</a>
+            <a class="main2_feature_text">Klasický survival svět</a>
         </div>
 
         <div class="main2_feature">
             <img src="media/placeholder.png">
             <a class="main2_feature_headline">PvP</a>
-            <a class="main2_feature_text">Competitive fights & arenas</a>
+            <a class="main2_feature_text">Areny a souboje</a>
         </div>
 
         <div class="main2_feature">
             <img src="media/placeholder.png">
-            <a class="main2_feature_headline">Events</a>
-            <a class="main2_feature_text">Weekly events & rewards</a>
+            <a class="main2_feature_headline">Eventy</a>
+            <a class="main2_feature_text">Pravidelné eventy</a>
         </div>
 
     </div>
 </div>
 
-<!-- DISCORD -->
+<!-- DISCORD PREMIUM -->
 <div id="discord" class="main4">
-    <a class="headline">Join Discord</a>
+    <a class="headline">Discord komunita</a>
 
-    <div class="main4_dc_div">
+    <div class="main4_dc_div" style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;padding:2rem;">
 
-        <iframe class="main4_dc_widget"
-            src="https://discord.com/widget?id=YOUR_SERVER_ID&theme=dark"
-            width="350" height="500"></iframe>
+        <div style="display:flex;flex-direction:column;max-width:300px;">
+            <h2 style="color:white;font-size:2rem;margin-bottom:1rem;">
+                Eternal Venture
+            </h2>
 
-        <div class="main4_dc_description_div">
-            <a class="main4_dc_description_title">Community</a>
+            <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;">
+                Připoj se k naší komunitě:<br><br>
+                ✔ Novinky<br>
+                ✔ Eventy<br>
+                ✔ Podpora<br>
+                ✔ Hráči online
+            </p>
 
-            <a class="main4_dc_description">
-                ・Chat with players<br>
-                ・News & updates<br>
-                ・Support<br>
+            <a href="https://discord.gg/F3MRKq9ceH"
+               style="
+                margin-top:1.5rem;
+                padding:0.8rem 1.5rem;
+                background:linear-gradient(135deg,#5865F2,#4752C4);
+                color:white;
+                text-decoration:none;
+                border-radius:12px;
+                text-align:center;
+                font-weight:600;
+               ">
+                ➜ Připojit se na Discord
             </a>
+        </div>
 
-            <a href="https://discord.gg/F3MRKq9ceH" class="main4_dc_button_a">
-                <div class="main4_dc_button">Join Discord</div>
-            </a>
+        <div style="
+            width:260px;
+            height:260px;
+            background: radial-gradient(circle at top,#5865F2,transparent 70%),#1e1f22;
+            border-radius:20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+        ">
+            <div style="font-size:3rem;">💬</div>
+            <div style="color:white;font-size:1.2rem;margin-top:1rem;">Discord</div>
         </div>
 
     </div>
@@ -117,23 +138,23 @@
 
 <!-- JOIN -->
 <div id="join" class="main3">
-    <a class="headline">How to join</a>
+    <a class="headline">Jak se připojit</a>
 
     <div class="main3_join_div_div">
 
         <div class="main3_join_div">
-            <a class="main3_join_title">Java Edition</a>
+            <a class="main3_join_title">Java</a>
             <div>
                 <a>IP: play.eternalventure.cz</a><br>
-                <a>Version: 1.18+</a>
+                <a>Verze: 1.18+</a>
             </div>
         </div>
 
         <div class="main3_join_div">
-            <a class="main3_join_title">Bedrock Edition</a>
+            <a class="main3_join_title">Bedrock</a>
             <div>
-                <a>IP: play.eternalventure.cz</a><br>
-                <a>Port: 19132</a>
+                <a>IP: omega.goodhost.cz</a><br>
+                <a>Port: 6006</a>
             </div>
         </div>
 
