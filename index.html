@@ -1,172 +1,212 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eternal Venture | Minecraft Server</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eternal Venture | Minecraft Network</title>
 
-    <link rel="icon" href="media/favicon.png">
-    <link rel="stylesheet" href="media/style.css">
-    <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+<link rel="icon" href="media/favicon.png">
+<link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:'Space Grotesk',sans-serif;
+    background: radial-gradient(circle at top,#141006,#070605);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* GOLD BACKGROUND GLOW */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;left:0;
+    background: radial-gradient(circle at 50% 20%,rgba(255,215,0,0.18),transparent 60%);
+    z-index:-2;
+}
+
+#particles-js{
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:-1;
+}
+
+/* HERO */
+.hero{
+    text-align:center;
+    padding-top:120px;
+}
+
+/* GOLD V LOGO */
+.v_logo{
+    font-size:9rem;
+    font-weight:900;
+    color:#ffd700;
+    text-shadow:
+        0 0 15px #ffd700,
+        0 0 40px #ffd700,
+        0 0 80px rgba(255,215,0,0.6);
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+    100%{transform:translateY(0);}
+}
+
+.title{
+    font-size:2.5rem;
+    margin-top:20px;
+}
+
+.gold{
+    color:#ffd700;
+    font-weight:800;
+}
+
+/* IP BUTTON */
+.ip{
+    margin-top:25px;
+    padding:16px 34px;
+    font-size:1.5rem;
+    font-weight:800;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    background:linear-gradient(135deg,#ffd700,#ffb300);
+    color:#1a1200;
+    box-shadow:0 0 25px rgba(255,215,0,0.4);
+    transition:0.3s;
+}
+
+.ip:hover{
+    transform:scale(1.07);
+    box-shadow:0 0 45px rgba(255,215,0,0.7);
+}
+
+/* STATUS */
+.status{
+    margin-top:15px;
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    background:rgba(0,0,0,0.4);
+    border:1px solid rgba(255,215,0,0.4);
+    backdrop-filter:blur(10px);
+}
+
+.online{
+    color:#ffd700;
+    border-color:#ffd700;
+}
+
+.offline{
+    color:#ff4d4d;
+}
+
+/* SECTION */
+.section{
+    margin-top:120px;
+    text-align:center;
+}
+
+.discord{
+    margin-top:40px;
+    display:inline-block;
+    padding:14px 28px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#5865F2,#4752C4);
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+    transition:0.3s;
+}
+
+.discord:hover{
+    transform:scale(1.05);
+}
+</style>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="desktop_navbar">
-    <a href="#">
-        <img class="desktop_navbar_logo_img" src="media/logo_small.png">
-    </a>
-
-    <a href="#about" class="desktop_navbar_link scroll">O serveru</a>
-    <a href="#discord" class="desktop_navbar_link scroll">Discord</a>
-    <a href="#join" class="desktop_navbar_link scroll">Připojení</a>
-
-    <div class="desktop_navbar_link2_div">
-        <a href="#join" class="desktop_navbar_link2 scroll">HRÁT TEĎ</a>
-    </div>
-</nav>
+<div id="particles-js"></div>
 
 <!-- HERO -->
-<div class="mainflex">
+<div class="hero">
 
-    <div class="main1">
+    <div class="v_logo">V</div>
 
-        <img class="main1_logo" src="media/logo.png">
-
-        <div class="main1_description">
-            <a>Vítej na</a>
-            <a class="main1_actcent">✦ Eternal Venture ✦</a>
-        </div>
-
-        <!-- IP COPY -->
-        <div class="main1_ipcopier_div">
-            <button class="main1_ipcopier" onclick="copyIP()">
-                <span class="main1_ipcopier_text1">play.eternalventure.cz</span>
-                <br>
-                <span class="main1_ipcopier_text2">Klikni pro kopírování</span>
-            </button>
-
-            <script>
-                function copyIP() {
-                    navigator.clipboard.writeText("play.eternalventure.cz");
-                }
-            </script>
-        </div>
-
+    <div class="title">
+        Vítej na <span class="gold">Eternal Venture</span>
     </div>
 
-<!-- ABOUT -->
-<div id="about"></div>
+    <button class="ip" onclick="copyIP()">
+        play.eternalventure.cz
+    </button>
 
-<div class="main2">
-    <a class="headline">Co nabízíme</a>
+    <div id="status" class="status">Načítání serveru...</div>
 
-    <div class="main2_features_div">
+    <br>
 
-        <div class="main2_feature">
-            <img src="media/placeholder.png">
-            <a class="main2_feature_headline">Survival</a>
-            <a class="main2_feature_text">Klasický survival svět</a>
-        </div>
-
-        <div class="main2_feature">
-            <img src="media/placeholder.png">
-            <a class="main2_feature_headline">PvP</a>
-            <a class="main2_feature_text">Areny a souboje</a>
-        </div>
-
-        <div class="main2_feature">
-            <img src="media/placeholder.png">
-            <a class="main2_feature_headline">Eventy</a>
-            <a class="main2_feature_text">Pravidelné eventy</a>
-        </div>
-
-    </div>
-</div>
-
-<!-- DISCORD PREMIUM -->
-<div id="discord" class="main4">
-    <a class="headline">Discord komunita</a>
-
-    <div class="main4_dc_div" style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;padding:2rem;">
-
-        <div style="display:flex;flex-direction:column;max-width:300px;">
-            <h2 style="color:white;font-size:2rem;margin-bottom:1rem;">
-                Eternal Venture
-            </h2>
-
-            <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;">
-                Připoj se k naší komunitě:<br><br>
-                ✔ Novinky<br>
-                ✔ Eventy<br>
-                ✔ Podpora<br>
-                ✔ Hráči online
-            </p>
-
-            <a href="https://discord.gg/F3MRKq9ceH"
-               style="
-                margin-top:1.5rem;
-                padding:0.8rem 1.5rem;
-                background:linear-gradient(135deg,#5865F2,#4752C4);
-                color:white;
-                text-decoration:none;
-                border-radius:12px;
-                text-align:center;
-                font-weight:600;
-               ">
-                ➜ Připojit se na Discord
-            </a>
-        </div>
-
-        <div style="
-            width:260px;
-            height:260px;
-            background: radial-gradient(circle at top,#5865F2,transparent 70%),#1e1f22;
-            border-radius:20px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            flex-direction:column;
-        ">
-            <div style="font-size:3rem;">💬</div>
-            <div style="color:white;font-size:1.2rem;margin-top:1rem;">Discord</div>
-        </div>
-
-    </div>
-</div>
-
-<!-- JOIN -->
-<div id="join" class="main3">
-    <a class="headline">Jak se připojit</a>
-
-    <div class="main3_join_div_div">
-
-        <div class="main3_join_div">
-            <a class="main3_join_title">Java</a>
-            <div>
-                <a>IP: play.eternalventure.cz</a><br>
-                <a>Verze: 1.18+</a>
-            </div>
-        </div>
-
-        <div class="main3_join_div">
-            <a class="main3_join_title">Bedrock</a>
-            <div>
-                <a>IP: omega.goodhost.cz</a><br>
-                <a>Port: 6006</a>
-            </div>
-        </div>
-
-    </div>
-</div>
+    <a class="discord" href="https://discord.gg/F3MRKq9ceH">
+        Připojit se na Discord
+    </a>
 
 </div>
 
-<!-- FOOTER -->
-<footer class="copyright_div">
-    <a class="copyright">Eternal Venture © 2026</a>
-</footer>
+<script>
+function copyIP(){
+    navigator.clipboard.writeText("play.eternalventure.cz");
+}
+
+/* SERVER STATUS */
+async function status(){
+    try{
+        const res = await fetch("https://api.mcsrvstat.us/2/play.eternalventure.cz");
+        const d = await res.json();
+
+        const el = document.getElementById("status");
+
+        if(d.online){
+            el.className = "status online";
+            el.innerHTML = "🟡 ONLINE • " + d.players.online + "/" + d.players.max;
+        }else{
+            el.className = "status offline";
+            el.innerHTML = "🔴 OFFLINE";
+        }
+    }catch(e){
+        document.getElementById("status").innerHTML = "⚠ nelze načíst";
+    }
+}
+
+status();
+setInterval(status,30000);
+
+/* PARTICLES */
+particlesJS("particles-js",{
+  particles:{
+    number:{value:70},
+    color:{value:"#ffd700"},
+    opacity:{value:0.35},
+    size:{value:2},
+    line_linked:{
+      enable:true,
+      color:"#ffd700",
+      opacity:0.2
+    },
+    move:{enable:true,speed:0.9}
+  }
+});
+</script>
 
 </body>
 </html>
